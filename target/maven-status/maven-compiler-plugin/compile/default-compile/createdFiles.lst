@@ -1,0 +1,9 @@
+com\ibm\ro\tm\apprenticeship\poll\metter\be\PollMetterBeApplication.class
+com\ibm\ro\tm\apprenticeship\poll\metter\entity\Role.class
+com\ibm\ro\tm\apprenticeship\poll\metter\repository\UserRepository.class
+com\ibm\ro\tm\apprenticeship\poll\metter\entity\User.class
+com\ibm\ro\tm\apprenticeship\poll\metter\be\SwaggerConfiguration.class
+com\ibm\ro\tm\apprenticeship\poll\metter\repository\RoleRepository.class
+com\ibm\ro\tm\apprenticeship\poll\metter\be\DataLoader.class
+com\ibm\ro\tm\apprenticeship\poll\metter\controller\RoleController.class
+com\ibm\ro\tm\apprenticeship\poll\metter\controller\UserController.class
