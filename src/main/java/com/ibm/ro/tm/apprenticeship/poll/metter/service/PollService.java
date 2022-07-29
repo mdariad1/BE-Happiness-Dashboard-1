@@ -1,5 +1,6 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.service;
 
+import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Answer;
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Poll;
 import com.ibm.ro.tm.apprenticeship.poll.metter.exception.PollNotFoundException;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.PollRepository;
@@ -33,6 +34,7 @@ public class PollService {
     }
 
     public void deletePoll(Long id){
+        Poll searched = findPollById(id);
         pollRepo.deletePollById(id);
     }
 

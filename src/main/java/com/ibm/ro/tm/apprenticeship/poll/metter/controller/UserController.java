@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ibm.ro.tm.apprenticeship.poll.metter.entity.controller;
+package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
 
@@ -26,31 +26,31 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/all")
+	@GetMapping("")
 	public ResponseEntity<List<User>> getAllUsers () {
 		List<User> users = userService.findAllUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@GetMapping("/find/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<User> getUserById (@PathVariable("id") Long id) {
 		User employee = userService.findUserById(id);
 		return new ResponseEntity<>(employee, HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
+	@PostMapping("")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 		User newUser = userService.addUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update")
+	@PutMapping("")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		User updateUser = userService.updateUser(user);
 		return new ResponseEntity<>(updateUser, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
 		userService.deleteUser(id);
 		return new ResponseEntity<>(HttpStatus.OK);

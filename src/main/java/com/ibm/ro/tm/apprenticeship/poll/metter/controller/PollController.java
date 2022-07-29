@@ -1,4 +1,4 @@
-package com.ibm.ro.tm.apprenticeship.poll.metter.entity.controller;
+package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
 
@@ -20,31 +20,31 @@ public class PollController {
         this.pollService = pollService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<Poll>> getAllPolls () {
         List<Poll> polls = pollService.findAllPolls();
         return new ResponseEntity<>(polls, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Poll> getPollById (@PathVariable("id") Long id) {
         Poll employee = pollService.findPollById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Poll> addPoll(@RequestBody Poll poll) {
         Poll newPoll = pollService.addPoll(poll);
         return new ResponseEntity<>(newPoll, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll) {
         Poll updatePoll = pollService.updatePoll(poll);
         return new ResponseEntity<>(updatePoll, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePoll(@PathVariable("id") Long id) {
         pollService.deletePoll(id);
         return new ResponseEntity<>(HttpStatus.OK);

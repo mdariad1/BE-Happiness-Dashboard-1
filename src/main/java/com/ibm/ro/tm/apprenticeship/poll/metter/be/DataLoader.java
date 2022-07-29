@@ -3,9 +3,9 @@
  */
 package com.ibm.ro.tm.apprenticeship.poll.metter.be;
 
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.controller.UserController;
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.controller.PollController;
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.controller.AnswerController;
+import com.ibm.ro.tm.apprenticeship.poll.metter.controller.UserController;
+import com.ibm.ro.tm.apprenticeship.poll.metter.controller.PollController;
+import com.ibm.ro.tm.apprenticeship.poll.metter.controller.AnswerController;
 import com.ibm.ro.tm.apprenticeship.poll.metter.service.UserService;
 import com.ibm.ro.tm.apprenticeship.poll.metter.service.PollService;
 import com.ibm.ro.tm.apprenticeship.poll.metter.service.AnswerService;
@@ -41,7 +41,7 @@ class DataLoader {
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));

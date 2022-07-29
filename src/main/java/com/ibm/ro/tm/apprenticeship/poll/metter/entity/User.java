@@ -61,6 +61,16 @@ public class User implements Comparable<User> {
 	 */
 	public String getRole() { return role; }
 
+	public void setId(Long id){
+		this.id = id;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+	public void setRole(String role){
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName() + "(" + this.id + ", " + this.name + ", " + this.role + ")";

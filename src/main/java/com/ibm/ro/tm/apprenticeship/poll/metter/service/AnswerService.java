@@ -1,10 +1,12 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.service;
 
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Answer;
+import com.ibm.ro.tm.apprenticeship.poll.metter.entity.User;
 import com.ibm.ro.tm.apprenticeship.poll.metter.exception. AnswerNotFoundException;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -31,6 +33,7 @@ public class AnswerService {
     }
 
     public void deleteAnswer(Long id){
+        Answer searched = findAnswerById(id);
         answerRepo.deleteAnswerById(id);
     }
 

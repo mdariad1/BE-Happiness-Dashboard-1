@@ -28,7 +28,7 @@ public class Poll implements Comparable<Poll> {
 
     @JsonIgnore
     @OneToMany(mappedBy = "poll")
-    private Set<Answer> answers = new HashSet<>();
+    private Set<Answer> answers;
 
     protected Poll() {
     }
