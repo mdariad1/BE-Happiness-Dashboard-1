@@ -4,7 +4,10 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
+import java.util.Set;
 
+import com.ibm.ro.tm.apprenticeship.poll.metter.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,33 +24,27 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 	private final UserService userService;
-
+	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 
 	@GetMapping("")
-	public ResponseEntity<List<User>> getAllUsers () {
-		List<User> users = userService.findAllUsers();
+	public ResponseEntity<Set<UserDTO>> getAllUsers () {
+		Set<UserDTO> users = userService.findAllUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getUserById (@PathVariable("id") Long id) {
-		User employee = userService.findUserById(id);
-		return new ResponseEntity<>(employee, HttpStatus.OK);
+	public ResponseEntity<UserDTO> getUserById (@PathVariable("id") Long id) {
+		UserDTO userDto = userService.findUserById(id);
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
 
 	@PostMapping("")
-	public ResponseEntity<User> addUser(@RequestBody User user) {
-		User newUser = userService.addUser(user);
+	public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDto) {
+		UserDTO newUser = userService.addUser(userDto);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-	}
-
-	@PutMapping("")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		User updateUser = userService.updateUser(user);
-		return new ResponseEntity<>(updateUser, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

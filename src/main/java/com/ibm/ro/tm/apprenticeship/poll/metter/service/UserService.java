@@ -1,55 +1,63 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.service;
 
-import com.ibm.ro.tm.apprenticeship.poll.metter.entity.Answer;
+import com.ibm.ro.tm.apprenticeship.poll.metter.dto.UserDTO;
 import com.ibm.ro.tm.apprenticeship.poll.metter.entity.User;
-import com.ibm.ro.tm.apprenticeship.poll.metter.exception.AnswerNotFoundException;
-import com.ibm.ro.tm.apprenticeship.poll.metter.exception.UserNotFoundException;
+import com.ibm.ro.tm.apprenticeship.poll.metter.exception.CustomException;
 import com.ibm.ro.tm.apprenticeship.poll.metter.repository.UserRepository;
+import mapper.PollMapper;
+import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
 public class UserService {
-    private final UserRepository userRepo;
+
+
+    private UserRepository userRepo;
+
 
     @Autowired
-    public UserService(UserRepository userRepo){
+    public UserService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
-    public User addUser(User user){
-        return userRepo.save(user);
-    }
-    public List<User> findAllUsers(){
-        return userRepo.findAll();
-    }
 
-    public User updateUser(User newuser){
-        return userRepo.save(newuser);
+    public UserDTO addUser(UserDTO userDto){
+        User user = UserMapper.toEntity(userDto);
+        User savedUser = userRepo.save(user);
+        UserDTO newUserDto = UserMapper.toDto(savedUser);
+        return  newUserDto;
     }
-
-
-    public User findUserById(Long id){
-        return userRepo.findUserById(id).orElseThrow(() -> new UserNotFoundException("User with this id not found"));
-    }
-    /*
-    @ExceptionHandler({ UserNotFoundException.class})
-    public User getUserById(Long id){
-        return userRepo.getById(id);
-    }*/
-    public void deleteUser(Long id){
-        User searched = findUserById(id);
-        userRepo.deleteUserById(id);
+    public Set<UserDTO> findAllUsers(){
+        Set<User> users = new HashSet<User>(userRepo.findAll());
+        return UserMapper.toSetDto(users);
     }
 
+    public UserDTO findUserById(Long userId){
+        Optional<User> existingUser = userRepo.findById(userId);
+        if (!existingUser.isPresent()) {
+            throw new CustomException(HttpStatus.NOT_FOUND,"User with id: "+userId+" not found");
+        }
+        User userEntity = existingUser.get();
+        UserDTO updatedUserDto = UserMapper.toDto(userEntity);
+        return  updatedUserDto;
+    }
 
+    public void deleteUser(Long userId){
+        Optional<User> existingUser = userRepo.findById(userId);
+        if (!existingUser.isPresent()) {
+            throw new CustomException(HttpStatus.NOT_FOUND,"User with id: "+userId+" not found");
+        }
+        userRepo.deleteUserById(userId);
+    }
 
 }
 

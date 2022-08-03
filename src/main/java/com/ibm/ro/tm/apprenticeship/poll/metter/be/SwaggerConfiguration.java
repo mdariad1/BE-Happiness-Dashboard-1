@@ -15,7 +15,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  *
  */
 public class SwaggerConfiguration {
-	@Bean
+	@Bean("rat2")
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)//
 				.select()//

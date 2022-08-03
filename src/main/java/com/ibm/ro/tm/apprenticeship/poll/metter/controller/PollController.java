@@ -1,8 +1,11 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.controller;
 
 import java.util.List;
+import java.util.Set;
 
 
+import com.ibm.ro.tm.apprenticeship.poll.metter.dto.PollDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,34 +17,40 @@ import com.ibm.ro.tm.apprenticeship.poll.metter.service.PollService;
 @RequestMapping("/polls")
 public class PollController {
 
-    private final PollService pollService;
 
+    private final PollService pollService;
+    @Autowired
     public PollController(PollService pollService) {
         this.pollService = pollService;
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Poll>> getAllPolls () {
-        List<Poll> polls = pollService.findAllPolls();
-        return new ResponseEntity<>(polls, HttpStatus.OK);
+    public ResponseEntity<Set<PollDTO>> getAllPolls () {
+        Set<PollDTO> pollDTOS = pollService.findAllPolls();
+        return new ResponseEntity<>(pollDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Poll> getPollById (@PathVariable("id") Long id) {
-        Poll employee = pollService.findPollById(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    public ResponseEntity<PollDTO> getPollById (@PathVariable("id") Long id) {
+        PollDTO pollDTO = pollService.findPollById(id);
+        return new ResponseEntity<>(pollDTO, HttpStatus.OK);
+    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Set<PollDTO>> getPollsByUserId (@PathVariable("id") Long id) {
+        Set<PollDTO> pollDTOS = pollService.findPollsByUserId(id);
+        return new ResponseEntity<>(pollDTOS, HttpStatus.OK);
     }
 
     @PostMapping("")
-    public ResponseEntity<Poll> addPoll(@RequestBody Poll poll) {
-        Poll newPoll = pollService.addPoll(poll);
+    public ResponseEntity<PollDTO> addPoll(@RequestBody PollDTO pollDTO) {
+        PollDTO newPoll = pollService.addPoll(pollDTO);
         return new ResponseEntity<>(newPoll, HttpStatus.CREATED);
     }
 
     @PutMapping("")
-    public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll) {
-        Poll updatePoll = pollService.updatePoll(poll);
-        return new ResponseEntity<>(updatePoll, HttpStatus.OK);
+    public ResponseEntity<PollDTO> updatePoll(@RequestBody PollDTO pollDTO) {
+        PollDTO updatedPoll = pollService.updatePoll(pollDTO);
+        return new ResponseEntity<>(updatedPoll, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -1,20 +1,10 @@
 package com.ibm.ro.tm.apprenticeship.poll.metter.entity;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import javax.persistence.*;
 
-import org.hibernate.annotations.SortNatural;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-/**
- * @author O09860826
- *
- */
 @Entity
-public class Answer implements Comparable<Answer> {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,45 +16,47 @@ public class Answer implements Comparable<Answer> {
     @Column
     private Integer rating;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "poll_id", referencedColumnName = "id")
     private Poll poll;
 
-    protected Answer() {
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user ;
 
+    public Answer() {
     }
 
-    public Answer(String content) {
-        this.content = content;
-    }
-
-    /**
-     * @return the id
-     */
     public Long getId() {
         return id;
     }
 
-    /**
-     * @return the content
-     */
     public String getContent() {
         return content;
     }
+    public void setContent(String content){
+        this.content = content;
+    }
 
-    /**
-     * @return the rating
-     */
     public Integer getRating() {
         return rating;
     }
+    public void setRating(Integer rating){
+        this.rating = rating;
+    }
 
-    /**
-     * @return the pollID
-     */
+    public Poll getPoll() {
+        return poll;
+    }
+    public void setPoll(Poll poll){
+        this.poll = poll;
+    }
 
-    public Long getPoll() {
-        return poll.getId();
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user){
+        this.user = user;
     }
 
     @Override
@@ -72,20 +64,4 @@ public class Answer implements Comparable<Answer> {
         return this.getClass().getSimpleName() + "(" + this.id + ", " + this.content + ")";
     }
 
-    @Override
-    public int compareTo(Answer o) {
-        int result = 0;
-        if (o != null) {
-            if (id != null) {
-                result = id.compareTo(o.getId());
-            } else if (o.getId() != null) {
-                result = 1;
-            }else {
-                result = 0;
-            }
-        } else {
-            result = -1;
-        }
-        return result;
-    }
 }
